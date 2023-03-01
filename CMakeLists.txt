@@ -1,8 +1,7 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
+set(CMAKE_CXX_STANDARD 17)
+
 project ("MovingAverage")
 
-# Добавьте источник в исполняемый файл этого проекта.
-add_executable (MovingAverage "main.cpp" "TestTask.h")
-
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
+add_executable (MovingAverage "main.cpp" "moving_average.h")

@@ -1,12 +1,16 @@
 ﻿// TestTask.cpp: определяет точку входа для приложения.
 //
 
-#include "TestTask.h"
+#include "moving_average.h"
 
-using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	double* data_d{0};
+	float* data_f{ 0 };
+	int* data_i{ 0 };
+
+	auto val = moving_avarage(data_d, 0, 0);
+
 	return 0;
 }
