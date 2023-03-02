@@ -1,0 +1,14 @@
+Measure double: 
+4 : 4032258 counts/sec 
+8 : 5586592 counts/sec 
+16 : 4405286 counts/sec 
+32 : 5747126 counts/sec 
+64 : 6060606 counts/sec 
+128 : 9803921 counts/sec 
+Measure float:
+4 : 8264463 counts/sec 
+8 : 8264463 counts/sec 
+16 : 10101010 counts/sec 
+32 : 7633588 counts/sec 
+64 : 9523810 counts/sec 
+128 : 9433962 counts/sec 
