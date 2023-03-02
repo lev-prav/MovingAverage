@@ -19,7 +19,7 @@ std::vector<T> moving_avarage(const T* signal, int signal_length, int window_siz
 	std::vector<T> smooth_data{sum/window_koef};
 	smooth_data.reserve(signal_length - window_size + 1);
 
-	for (int i = 0, window_end = window_size; window_end < signal_length; window_end++, i++) {
+	for (int window_end = window_size; window_end < signal_length; window_end++) {
 		int window_start = window_end - window_size;
 		T window_sum = sum - signal[window_start] + signal[window_end];
 		smooth_data.push_back(window_sum / window_koef);

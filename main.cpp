@@ -68,11 +68,11 @@ long long test(int signal_size, int window_size, bool print = false){
 }
 
 
-int main(int argc, char** argv) {
+void benchmark() {
 	int signal_size = 5'000'000;
 	int windows[]{ 4, 8, 16, 32, 64, 128 };
 
-	std::ofstream fout("Time measures_to_sec_5_release.txt");
+	std::ofstream fout("../../../analyse/Time measures_to_sec_5_release.txt");
 	std::cout << "Measure double: \n";
 	fout << "Measure double: \n";
 	for (int window_size : windows) {
@@ -99,6 +99,15 @@ int main(int argc, char** argv) {
 	//std::cout << "Double done\n";
 	//auto time_f = test<float>(signal_size, windows[1], true);
 	//std::cout << "Float done\n";
+}
 
-	return 0;
+int main(int argc, char** argv) {
+	// USAGE EXAMPLE 
+
+	int signal_size = 1'000'000, window_size = 8;
+	std::vector<double> random_signal = generate_signal<double>(signal_size);
+
+	std::vector<double> smooth_signal = moving_avarage(random_signal.data(), random_signal.size(), window_size);
+
+	return 0; 
 }
