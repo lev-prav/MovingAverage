@@ -69,24 +69,36 @@ long long test(int signal_size, int window_size, bool print = false){
 
 
 int main(int argc, char** argv) {
-	int signal_size = 1'000'000;
+	int signal_size = 5'000'000;
 	int windows[]{ 4, 8, 16, 32, 64, 128 };
-	//std::cout << "Measure double: \n";
-	//for (int window_size : windows) {
-	//	auto time = test<double>(signal_size, window_size);
-	//	std::cout << window_size << " : " << time << " mls \n";
-	//}
 
-	//std::cout << "Measure float:\n";
-	//for (int window_size : windows) {
-	//	auto time = test<float>(signal_size, window_size);
-	//	std::cout << window_size << " : " << time << " mls \n";
-	//}
+	std::ofstream fout("Time measures_to_sec_5_release.txt");
+	std::cout << "Measure double: \n";
+	fout << "Measure double: \n";
+	for (int window_size : windows) {
+		auto time = test<double>(signal_size, window_size);
 
-	auto time_d = test<double>(signal_size, windows[1], true);
-	std::cout << "Double done\n";
-	auto time_f = test<float>(signal_size, windows[1], true);
-	std::cout << "Float done\n";
+		time = 1000.f * (double(signal_size) / time);
+
+		std::cout << window_size << " : " << time << " counts/sec \n";
+		fout << window_size << " : " << time << " counts/sec \n";
+	}
+
+	std::cout << "Measure float:\n";
+	fout << "Measure float:\n";
+	for (int window_size : windows) {
+		auto time = test<float>(signal_size, window_size);
+
+		time = 1000.f * (float(signal_size) / time);
+
+		std::cout << window_size << " : " << time << " counts/sec \n";
+		fout << window_size << " : " << time << " counts/sec \n";
+	}
+
+	//auto time_d = test<double>(signal_size, windows[1], true);
+	//std::cout << "Double done\n";
+	//auto time_f = test<float>(signal_size, windows[1], true);
+	//std::cout << "Float done\n";
 
 	return 0;
 }
