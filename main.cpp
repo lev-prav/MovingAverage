@@ -1,22 +1,61 @@
-﻿// TestTask.cpp: определяет точку входа для приложения.
-//
-
+﻿#include <random>
+#include <iomanip>
+#include <chrono>
+#include <iostream>
 #include "moving_average.h"
 
 
-int main()
-{
-	double* data_d = new double[10]{ 1,2,3,4,5,6,7,8,9,10 };
-	int* data_i{ 0 };
+template<typename T>
+std::vector<T>&& generate_signal(int signal_size) {
+	std::random_device rd;
+	std::default_random_engine eng(rd());
+	std::uniform_real_distribution<T> distr(-10'000.f, 10'000.f);
 
-	double data_arr[] = {1,2,3, 4, 5, 6, 7, 8, 9, 10};
+	std::vector<T> signal;
+	signal.reserve(signal_size);
 
-	auto val = moving_avarage(data_arr, sizeof(data_arr)/sizeof(data_arr[0]), 5);
-	
-	for (auto num : val) {
-		std::cout << num << " ";
+	for (int i = 0; i < signal_size; ++i) {
+		signal.push_back(distr(eng));
 	}
-	std::cout << "\n";
+
+	return std::move(signal)
+}
+
+template<typename T>
+long long test(int signal_size, int window_size, bool print = false){
+
+	std::vector<T> random_signal = generate_signal(signal_size);
+
+	auto begin = std::chrono::steady_clock::now();
+
+	std::vector<T> smooth_signal = moving_avarage(random_signal.data(), random_signal.size(), window_size);
+
+	auto end = std::chrono::steady_clock::now();
+	auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+	std::cout << "The time: " << elapsed_ms.count() << " ms\n";
+	
+	if (print) {
+		std::cout << "Random signal: \n";
+		for (T& num : random_signal) {
+			std::cout << num << " ";
+		}
+		std::cout << "\n\n";
+
+		std::cout << "Smooth signal: \n";
+		for (T& num : smooth_signal) {
+			std::cout << num << " ";
+		}
+		std::cout << "\n\n";
+	}
+
+
+	return elapsed_ms.count();
+}
+
+
+int main(int argc, char** argv) {
+	
+	auto time = test<double>(1024, 8);
 
 	return 0;
 }
